@@ -4,8 +4,7 @@ import uriSchema from "../schemas/uriSchema.js";
 async function shortenMiddleware(req, res, next) {
   const { url } = req.body;
 
-  let token = req.headers.authorization;
-  token = token?.slice(7, token.length);
+  const { token } = res.locals;
 
   const validBody = uriSchema.validate({ url }, { abortEarly: false });
 
@@ -14,17 +13,12 @@ async function shortenMiddleware(req, res, next) {
   }
 
   try {
-    const sessionExists = await db.query(
-      `SELECT * FROM sessions WHERE token = $1`,
-      [token]
-    );
-
-    if (sessionExists.rowCount === 0) {
-      return res.sendStatus(401);
-    }
+    const session = await db.query(`SELECT * FROM sessions WHERE token = $1`, [
+      token,
+    ]);
 
     res.locals.url = url;
-    res.locals.userId = sessionExists.rows[0].userId;
+    res.locals.userId = session.rows[0].userId;
 
     next();
   } catch (error) {

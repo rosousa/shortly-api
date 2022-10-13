@@ -6,6 +6,7 @@ import authenticationRoutes from "./routes/authenticationRoutes.js";
 import shortenRoute from "./routes/shortenRoute.js";
 import getUrlRoute from "./routes/getUrlRoute.js";
 import redirectUrlRoute from "./routes/redirectUrlRoute.js";
+import deleteUrlRoute from "./routes/deleteUrlRoute.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(authenticationRoutes);
 app.use(shortenRoute);
 app.use(getUrlRoute);
 app.use(redirectUrlRoute);
+app.use(deleteUrlRoute);
 
 app.get("/status", (req, res) => {
   res.sendStatus(200);
