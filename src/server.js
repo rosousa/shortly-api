@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
+import shortenRoute from "./routes/shortenRoute.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(authenticationRoutes);
+app.use(shortenRoute);
 
 app.get("/status", (req, res) => {
   res.sendStatus(200);
