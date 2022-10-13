@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authenticationRoutes from "./routes/authenticationRoutes.js";
 import shortenRoute from "./routes/shortenRoute.js";
+import getUrlRoute from "./routes/getUrlRoute.js";
+import redirectUrlRoute from "./routes/redirectUrlRoute.js";
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ app.use(cookieParser());
 
 app.use(authenticationRoutes);
 app.use(shortenRoute);
+app.use(getUrlRoute);
+app.use(redirectUrlRoute);
 
 app.get("/status", (req, res) => {
   res.sendStatus(200);
