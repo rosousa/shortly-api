@@ -13,4 +13,15 @@ const signupSchema = joi.object({
   confirmPassword: joi.ref("password"),
 });
 
-export { signupSchema };
+const signinSchema = joi.object({
+  email: joi
+    .string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net"] },
+    })
+    .required(),
+  password: joi.string().min(4).max(50).required(),
+});
+
+export { signupSchema, signinSchema };
