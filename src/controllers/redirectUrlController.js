@@ -13,10 +13,14 @@ async function read(req, res) {
       return res.sendStatus(404);
     }
 
-    await db.query(`UPDATE urls SET visits = $1 WHERE id = $2`, [
-      shortUrlExists.rows[0].visits + 1,
-      shortUrlExists.rows[0].id,
+    db.query(`UPDATE urls SET count = count + 1 WHERE "shortUrl" = $1`, [
+      shortUrl,
     ]);
+
+    db.query(
+      `UPDATE count SET "visitCount" = "visitCount" + 1 WHERE "userId" = $1`,
+      [shortUrlExists.rows[0].userId]
+    );
 
     res.redirect(shortUrlExists.rows[0].url);
   } catch (error) {

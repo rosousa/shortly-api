@@ -31,6 +31,10 @@ async function signin(req, res) {
       process.env.JWT_SECRET
     );
 
+    db.query(`DELETE FROM sessions WHERE "userId" = $1`, [
+      userExists.rows[0].id,
+    ]);
+
     await db.query(`INSERT INTO sessions ("userId", token) VALUES ($1, $2)`, [
       userExists.rows[0].id,
       token,

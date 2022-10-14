@@ -8,6 +8,7 @@ import getUrlRoute from "./routes/getUrlRoute.js";
 import redirectUrlRoute from "./routes/redirectUrlRoute.js";
 import deleteUrlRoute from "./routes/deleteUrlRoute.js";
 import getUserDataRoute from "./routes/getUserDataRoute.js";
+import rankingRoute from "./routes/rankingRoute.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(getUrlRoute);
 app.use(redirectUrlRoute);
 app.use(deleteUrlRoute);
 app.use(getUserDataRoute);
+app.use(rankingRoute);
 
 app.get("/status", (req, res) => {
   res.sendStatus(200);

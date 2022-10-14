@@ -20,6 +20,12 @@ async function signup(req, res) {
       [body.name, body.email, body.password]
     );
 
+    const data = (
+      await db.query(`SELECT id FROM users WHERE email = $1`, [body.email])
+    ).rows[0];
+
+    await db.query(`INSERT INTO count ("userId") VALUES ($1)`, [data.id]);
+
     res.sendStatus(201);
   } catch (error) {
     console.log(error);
