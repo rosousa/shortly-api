@@ -14,6 +14,8 @@ dotenv.config();
 
 const app = express();
 
+const PORT = process.env.PORT || 4000;
+
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -30,6 +32,4 @@ app.get("/status", (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(process.env.PORT, () =>
-  console.log("Listening on port " + process.env.PORT)
-);
+app.listen(PORT, () => console.log("Listening on port " + PORT));
