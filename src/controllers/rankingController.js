@@ -4,7 +4,7 @@ async function read(req, res) {
   try {
     const data = (
       await db.query(
-        `SELECT users.id, users.name, count."linksCount", count."visitCount" FROM users JOIN count ON users.id = count."userId" ORDER BY "visitCount" DESC LIMIT 10;`
+        `SELECT users.id, users.name, COUNT(urls) "linksCount", SUM(COALESCE(urls.count, 0)) "visitCount" FROM users LEFT JOIN urls ON users.id = urls."userId" GROUP BY users.id ORDER BY "visitCount" DESC LIMIT 10;`
       )
     ).rows;
 

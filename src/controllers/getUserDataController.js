@@ -5,19 +5,12 @@ async function read(req, res) {
 
   try {
     const data = await db.query(
-      `select users.id, users.name, SUM(urls.count) "visitCount" from users JOIN urls ON users.id = urls."userId" where users.id = $1 GROUP BY users.id;`,
+      `SELECT users.id, users.name, SUM(COALESCE(urls.count, 0)) AS "visitCount" FROM users LEFT JOIN urls ON users.id = urls."userId" WHERE users.id = $1 GROUP BY users.id;`,
       [userId]
     );
 
     if (data.rowCount === 0) {
-      const userData = (
-        await db.query(`SELECT id, name FROM users WHERE id = $1`, [userId])
-      ).rows[0];
-
-      userData.visitCount = 0;
-      userData.shortenedUrls = [];
-
-      return res.status(200).json(userData);
+      return res.sendStatus(404);
     }
 
     const urls = (

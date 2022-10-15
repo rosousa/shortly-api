@@ -17,11 +17,6 @@ async function read(req, res) {
       shortUrl,
     ]);
 
-    db.query(
-      `UPDATE count SET "visitCount" = "visitCount" + 1 WHERE "userId" = $1`,
-      [shortUrlExists.rows[0].userId]
-    );
-
     res.redirect(shortUrlExists.rows[0].url);
   } catch (error) {
     console.log(error);

@@ -12,17 +12,6 @@ async function shortenController(req, res) {
       `INSERT INTO urls (url, "shortUrl", "userId") VALUES ($1, $2, $3)`,
       [url, shortUrl, userId]
     );
-
-    const count = (
-      await db.query(`SELECT COUNT(urls) FROM urls WHERE "userId" = $1;`, [
-        userId,
-      ])
-    ).rows[0].count;
-
-    await db.query(`UPDATE count SET "linksCount" = $1 WHERE "userId" = $2;`, [
-      count,
-      userId,
-    ]);
     res.status(201).json({ shortUrl });
   } catch (error) {
     console.log(error);
