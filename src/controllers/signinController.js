@@ -28,7 +28,7 @@ async function signin(req, res) {
 
     const token = jwt.sign(
       { id: userExists.rows[0].id },
-      process.env.JWT_SECRET
+      process.env.TOKEN_SECRET
     );
 
     db.query(`DELETE FROM sessions WHERE "userId" = $1`, [

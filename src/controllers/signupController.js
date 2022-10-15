@@ -7,16 +7,17 @@ async function signup(req, res) {
   try {
     body.password = bcrypt.hashSync(body.password, 10);
 
-    const result = await db.query(
+    await db.query(
       "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)",
       [body.name, body.email, body.password]
     );
 
     res.sendStatus(201);
   } catch (error) {
-    if (error.message.includes("unique constraint")) {
+    if (error?.message.includes("unique constraint")) {
       return res.sendStatus(409);
     }
+    console.log(error);
     res.sendStatus(500);
   }
 }
